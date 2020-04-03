@@ -38,7 +38,7 @@ public class DataTypes {
      * @param d
      * @return
      */
-    public static double taskThree(double a, double b, double c, double d) {
+    public static int taskThree(int a, int b, int c, int d) {
         System.out.println("\nTask 3.\n");
         return a * (b + (c / d));
     }
