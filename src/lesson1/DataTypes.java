@@ -108,7 +108,11 @@ public class DataTypes {
      */
     public static void taskEight(int year) {
         System.out.println("\nTask8.\n");
-
+        if (!(year % 4 == 0) || ((year % 100 == 0) && !(year % 400 == 0))) {
+            System.out.println("Год " + year + " не является високосным");
+        } else {
+            System.out.println("Год " + year + " является високосным");
+        }
     }
 
 }
