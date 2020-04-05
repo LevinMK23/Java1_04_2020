@@ -47,7 +47,7 @@ public class Tasks {
     }
 
     static void task8(int year) {
-        if ((year % 400 == 0) | (year % 4 == 0 && year % 100 != 0)) {
+        if ((year % 400 == 0) | (year % 4 == 0 && !(year % 100 == 0))) {
             System.out.printf("Task8: The year %d is a leap year\n", year);
         } else {
             System.out.printf("Task8: The year %d is not a leap year\n", year);
