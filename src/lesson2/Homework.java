@@ -12,6 +12,7 @@ public class Homework {
         task3();
         task4(9);
         task5();
+        task5_v2();
         int[] arrForTask6 = {2, 2, 2, 1, 2, 2, 10, 2};
         System.out.println("\nВ массиве есть место где сумма частей равна? " + task6(arrForTask6));
         int[] arrForTask7 = {123, 213, 3, 400};
@@ -39,7 +40,7 @@ public class Homework {
 
     private static void task2() {
         int[] array = new int[8];
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 1; i < array.length; i++) {
             array[i] = i * 3;
         }
         System.out.println("Массив 2 задания: \n" + Arrays.toString(array) + "\n");
@@ -62,11 +63,9 @@ public class Homework {
 
     private static void task4(int arraySize) {
         int[][] array = new int[arraySize][arraySize];
-        int x = array.length;
         for (int i = 0; i < array.length; i++) {
-            x--;
             for (int j = 0; j < array[i].length; j++) {
-                if (i == j || j == x) {
+                if (i == j || j == array.length - i - 1) {
                     array[i][j] = 1;
                 } else {
                     array[i][j] = 0;
@@ -94,6 +93,27 @@ public class Homework {
         Arrays.sort(arr);
         System.out.println("Наименьший элемент: " + arr[0] + "\nНаибольший элемент: " + arr[arr.length-1]);
     }
+
+
+    private static void task5_v2() {
+        int [] arr = new int[20];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (int) (Math.random() * 100);
+        }
+        System.out.println("\nСлучайно созданный массив(второй вариант):\n" + Arrays.toString(arr));
+        int min = arr[0], max = arr[0];
+        for (int value : arr) {
+            if (value < min) {
+                min = value;
+            }
+            if (value > max) {
+                max = value;
+            }
+        }
+        System.out.println("Наименьший элемент: " + min + "\nНаибольший элемент: " + max);
+    }
+
+
 
 
     private static boolean task6(int [] arr) {
