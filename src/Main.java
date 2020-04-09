@@ -86,14 +86,13 @@ public class Main {
     }
 
     static boolean method6(int[] array) {
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < array.length + 1; i++) {
             int leftSum = 0, rightSum = 0;
             for (int j = 0; j < i; j++) {
-                leftSum += leftSum;
+                leftSum += array[j];
             }
-            for (int j = 0; j < array.length; j++) {
-                rightSum += rightSum;
-
+            for (int j = i; j < array.length; j++) {
+                rightSum += array[j];
             }
             if (leftSum == rightSum) return true;
         }
