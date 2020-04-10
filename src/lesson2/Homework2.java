@@ -1,11 +1,7 @@
 package lesson2;
-
-
-
-
 import java.util.Arrays;
 
-public class Homework {
+public class Homework2 {
     public static void main(String[] args) {
         task1();
         task2();
