@@ -1,0 +1,194 @@
+package geekbrains.lession0;
+
+import org.w3c.dom.ls.LSOutput;
+
+class HomeWork {
+
+    public static void main(String[] args) {
+        qwest1();
+        qwest2();
+        qwest3();
+        qwest4();
+        qwest5();
+        qwest6();
+        qwest7(5);
+
+    }
+
+        public static void qwest1 () {
+            int[] nubmer = new int[10];
+            for (int i = 0; i < 10; i++) {
+                nubmer[i] = 0;
+            }
+            nubmer[1] = 1;
+            nubmer[2] = 1;
+            nubmer[5] = 1;
+            nubmer[6] = 1;
+            nubmer[3] = 1;
+            for (int i = 0; i < 10; i++) {
+                System.out.print(i + "=" + nubmer[i] + "  ");
+            }
+            System.out.println();
+            for (int i = 0; i < 10; i++) {
+                if (nubmer[i] == 1) {
+                    nubmer[i] = 0;
+                } else {
+                    nubmer[i] = 1;
+                }
+
+            }
+            for (int i = 0; i < 10; i++) {
+                System.out.print(i + "=" + nubmer[i] + "  ");
+            }
+            System.out.println();
+        }
+        public static void qwest2(){
+        int[] two = new int[8];
+        int x=0;
+        for (int i = 0; i <8; i++) {
+            two [i]=x;
+            x+=3;
+        }
+        for (int i = 0; i <8; i++) {
+            System.out.print(i+"="+two[i]+" ");
+        }
+            System.out.println();
+    }
+    public static void qwest3(){
+        int[] three = new int[12];
+        three[0]=1;
+        three[1]=5;
+        three[2]=3;
+        three[3]=2;
+        three[4]=11;
+        three[5]=4;
+        three[6]=5;
+        three[7]=2;
+        three[8]=7;
+        three[9]=8;
+        three[10]=9;
+        three[11]=1;
+        for (int i = 0; i <12 ; i++) {
+            System.out.print(i+"="+three[i]+" ");
+        }
+        System.out.println();
+        for (int i = 0; i <12 ; i++) {
+            if (three[i]<6){
+                three[i]*=2;
+            }
+        }
+        for (int i = 0; i <12 ; i++) {
+            System.out.print(i+"="+three[i]+" ");
+        }
+        System.out.println();
+    }
+    public static void qwest4(){
+        int[][] matrix = new int[7][7];
+        for (int i = 0; i <7; i++) {
+            for (int j = 0; j <7; j++) {
+                if (i==j||i+j==6) {
+                    matrix [i][j]=1;
+                }
+                else
+                matrix[i][j]=0;
+            }
+        }
+        for (int i = 0; i <7; i++) {
+            for (int j = 0; j < 7; j++) {
+                System.out.print(matrix[i][j]+" ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    public static void qwest5(){
+        int[] three = new int[12];
+        three[0]=1;
+        three[1]=5;
+        three[2]=3;
+        three[3]=2;
+        three[4]=11;
+        three[5]=4;
+        three[6]=5;
+        three[7]=2;
+        three[8]=7;
+        three[9]=8;
+        three[10]=9;
+        three[11]=1;
+        int min =999; //для 100% работы со всеми числа лучше взять максимальное возможно число для int
+        int max =-999;
+        for (int i = 0; i <12; i++) {
+            if (three[i]>max){
+                max=three[i];
+            }
+            if (three[i]<min){
+                min=three[i];
+            }
+        }
+        System.out.println("max="+max);
+        System.out.println("min"+min);
+    }
+    public static void qwest6(){
+        int []massiv=new int[8];
+        massiv[0]= 2;
+        massiv[1]= 2;
+        massiv[2]= 2;
+        massiv[3]= 1;
+        massiv[4]= 2;
+        massiv[5]= 2;
+        massiv[6]= 10;
+        massiv[7]=1 ;
+        boolean otvet=false;
+        int z=0;
+        int x=0;
+        for (int i = 0; i <8; i++) {
+            z+=massiv[i];
+            x=0;
+            for (int j = 7; j >-1; j--) {
+                x+=massiv[j];
+                if (i+(8-j)==7&&z==x) {
+                    otvet=true;
+                }
+            }
+        }
+        System.out.println(otvet);
+    }
+    public static void qwest7(int x) {
+        int[] three = new int[12];
+        three[0]=1;
+        three[1]=5;
+        three[2]=3;
+        three[3]=2;
+        three[4]=11;
+        three[5]=4;
+        three[6]=5;
+        three[7]=2;
+        three[8]=7;
+        three[9]=8;
+        three[10]=9;
+        three[11]=1;
+        for (int i = 0; i <12 ; i++) {
+            System.out.print(i+"="+three[i]+" ");
+        }
+        System.out.println();
+        if (x>=0){
+            for (int i = 11; i >(-1+x); i--) {
+                three [i]=three[i-x];
+            }
+            for (int i = 0; i <x ; i++) {
+                three [i]=0;
+            }
+        }
+        else {
+            for (int i =0; i <(12+x); i++) {
+                three [i]=three[i-x];
+            }
+            for (int i = 11; i>(11+x) ; i--) {
+                three [i]=0;
+            }
+        }
+        for (int i = 0; i <12 ; i++) {
+            System.out.print(i+"="+three[i]+" ");
+        }
+    }
+}
