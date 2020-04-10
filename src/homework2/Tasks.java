@@ -119,13 +119,11 @@ public class Tasks {
         }
     }
 
-    public static void task7(int n) {
-        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
+    public static void task7(int[] arr, int n) {
         System.out.println("Task7: original array");
         printArray(arr);
 
-        int shiftIndex = 11;
+        int shiftIndex = n % arr.length;
         System.out.printf("Task7: shift index = %d\n" , shiftIndex);
 
         if (shiftIndex > 0) {
