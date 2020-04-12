@@ -4,22 +4,22 @@ import java.util.Scanner;
 
 public class Task3_2 {
     public static void main(String[] args) {
-        poleChudes(new String[]{"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli",
+        guessWord(new String[]{"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli",
                 "carrot", "cherry", "garlic", "grape", "melon", "leak", "kiwi", "mango", "mushroom", "nut", "olive",
                 "pea", "peanut", "pear", "pepper", "pineapple", "pumpkin", "potato"});
     }
 
-    private static void poleChudes (String[] words) {
-        String guessWord = words[(int)(Math.random() * words.length)];
+    private static void guessWord(String[] words) {
+        String hiddenWord = words[(int)(Math.random() * words.length)];
         System.out.print("Добро пожаловать в поле чудес. Вам нужно отгадать слово, при неверном ответе вы увидите буквы которые стоят в правильных местах.\nВведите слово: ");
         Scanner userIn = new Scanner(System.in);
         String userAnswer = userIn.next().toLowerCase();
         int tryCount = 1;
-        while (!userAnswer.equals(guessWord)) {
+        while (!userAnswer.equals(hiddenWord)) {
             tryCount++;
             StringBuilder hint = new StringBuilder();
             for (int i = 0; i < userAnswer.length(); i++) {
-                if (guessWord.charAt(i) == userAnswer.charAt(i)) {
+                if (hiddenWord.charAt(i) == userAnswer.charAt(i)) {
                     hint.append(userAnswer.charAt(i));
                 } else {
                     hint.append("#");
