@@ -1,5 +1,7 @@
 package lesson2;
 
+import java.util.Arrays;
+
 public class HomeworkTwo {
 
     public static void main(String[] args) {
@@ -9,7 +11,10 @@ public class HomeworkTwo {
         //taskFour();
         //taskFive();
         //taskSix();
+        //taskSix(new int[]{1, 3, 2, 5, 3, 1, 4, 3});
         //taskSeven();
+        //taskSeven(new int[] {1, 2, 3, 4, 5}, -1);
+        taskSevenON(new int[] {1, 2, 3, 4, 5}, 2);
     }
 
     /**
@@ -55,6 +60,7 @@ public class HomeworkTwo {
             System.out.print(a[i] + " ");
         }
     }
+
 
     /**
      * 4. Создать квадратный двумерный целочисленный массив (количество строк и столбцов одинаковое),
@@ -102,10 +108,45 @@ public class HomeworkTwo {
      * Примеры: checkBalance([2, 2, 2, 1, 2, 2, || 10, 1]) → true, checkBalance([1, 1, 1, || 2, 1]) → true,
      * граница показана символами ||, эти символы в массив не входят.
      */
+    // third version
+    // O(N) N = input.length
+    //          1 2 3 1 | 4 3
+    // fullSum  1 3 6 7 | 11 14
+    // leftSum  1 3 6 7 | (7*2=14)
+    public static boolean taskSix(int [] input) {
+        System.out.println("\n\nTask 6.");
+        // 1 2 3 1 | 4 3
+        // ctrl + alt + l
+        StringBuilder resut = new StringBuilder();
+        int fullSum = 0;
+        for (int i : input) fullSum += i;
+        if (fullSum % 2 == 1) {
+            return false;
+        }
+        int leftSum = 0;
+        for (int i : input) {
+            leftSum += i;
+            if (leftSum * 2 == fullSum) {
+                int sum = 0;
+                for (int el : input) {
+                    sum += el;
+                    resut.append(el).append(' ');
+                    if (sum == leftSum) {
+                        resut.append("| ");
+                    }
+                }
+                System.out.println(resut);
+                return true;
+            }
+        }
+        return false;
+    }
+    /*
     public static boolean taskSix(int a[]) {
         System.out.println("\n\nTask 6.");
         int leftSum = 0;
         int rightSum = 0;
+//      first veriosn
         for (int i:a) {
             rightSum += i;
         }
@@ -116,21 +157,21 @@ public class HomeworkTwo {
             leftSum += a[i];
             rightSum -= a[i];
         }
-        /*
-        for (int i = 0; i < a.length + 1; i++) {
-            for (int j = 0; j < i; j++) {
-                leftSum += a[j];
-            }
-            for (int j = i; j < a.length; j++) {
-                rightSum += a[j];
-            }
-            if (leftSum == rightSum) {
-                return true;
-            }
-        }
-         */
+//      second version
+//        for (int i = 0; i < a.length + 1; i++) {
+//            for (int j = 0; j < i; j++) {
+//                leftSum += a[j];
+//            }
+//            for (int j = i; j < a.length; j++) {
+//                rightSum += a[j];
+//            }
+//            if (leftSum == rightSum) {
+//                return true;
+//            }
+//        }
         return false;
     }
+    */
 
     /**
      * 7. **** Написать метод, которому на вход подается одномерный массив и число n (может быть положительным,
@@ -139,6 +180,49 @@ public class HomeworkTwo {
      */
     public static void taskSeven(int[] a, int n) {
         System.out.println("\n\nTask 7.");
+        // 1 2 3 4 5 + 10 -> 2 3 4 5 1
+        // 1 2 3 4 5 - 1 -> 5 1 2 3 4
+        // -1 = +4
+        // +10 = 0
+        // 10 % 5 = 0
+        // 12 % 5 = +2
+
+        // 1 2 3 4 5
+        // -1
+        // 5 1 2 3 4
+        // ...
+        // - 1 = +4
+        // \1 \2 \3 \4 5 1 2 3 4        -1 = 5 - 1 = 4
+        // n = -1
+        // if (n < 0)
+        // n = -n // (n = 1)
+        // n =5 - n
+        // n % length (отбрасываем лишние циклы)
+        if (n < 0) {
+            n = -n;
+            n = n % a.length;
+            n = a.length -n;
+        }
+        n = n % a.length;//4 % 5 = 4
+        //System.out.println(n);
+        for (int i = 0; i < n; i++) {
+            int tmp = a[0];
+            //1 2 3 4 5 -> 1, 2 3 4 5 1
+            // 1 2 3 4 5
+            // doing this -> 2 3 4 5
+            /*
+            for (int j = 0; j < a.length - 1; j++) {
+                a[j] = a[j + 1];
+            }
+            */
+            //optimizing fori by replacing with System.arraycopy()
+            System.arraycopy(a, 1, a, 0, a.length - 1);
+            a[a.length - 1] = tmp;
+        }
+        System.out.println(Arrays.toString(a));
+
+        //second version
+        /*
         for (int i : a) {
             System.out.print(i + " ");
         }
@@ -169,6 +253,23 @@ public class HomeworkTwo {
                 System.out.print("\r\n");
             }
         }
+        */
+    }
+
+    public static void taskSevenON(int[] input, int n) {
+        System.out.println("\n\nTask 7.");
+        if (n < 0) {
+            n = -n;
+            n = n % input.length;
+            n = input.length - n;
+        }
+        n = n % input.length;
+        int [] tmp = new int[input.length];
+        int start = n;
+        for (int i = n; i < n + input.length; i++) {
+            tmp[i - n] = input[i % input.length];
+        }
+        System.out.println(Arrays.toString(tmp));
     }
 
 }
