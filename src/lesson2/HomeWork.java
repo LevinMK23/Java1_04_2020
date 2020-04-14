@@ -1,79 +1,59 @@
-package lesson2;
-
-import java.util.Arrays;
-
-public class HomeWork {
-
-    // O(N) N = input.length
-    public static boolean checkBalanse(int[] input) {
-        // 1 2 3 1 | 4 3 ctrl + alt + l
-        StringBuilder resut = new StringBuilder();
-        int fullSum = 0;
-        for (int i : input) fullSum += i;
-        if (fullSum % 2 == 1) {
-            return false;
+public class homeWork2 {
+    public static void main(String[] args) {
+        //1. Задать целочисленный массив, состоящий из элементов 0 и 1.
+        System.out.println("\r\nTask - 1");
+        System.out.println("Было - 1, 1, 0, 0, 1, 0, 1, 1, 0, 0");
+        int[] lag1 = {1, 1, 0, 0, 1, 0, 1, 1, 0, 0};
+            for (int i = 0; i < lag1.length; i++) {
+                lag1[i] = lag1[i] == 1 ? 0 : 1;
+            System.out.print(" Стало " + lag1[i]);
         }
-        int leftSum = 0;
-        for (int i : input) {
-            leftSum += i;
-            if (leftSum * 2 == fullSum) {
-                int sum = 0;
-                for (int el : input) {
-                    sum += el;
-                    resut.append(el).append(' ');
-                    if (sum == leftSum) {
-                        resut.append("| ");
-                    }
-                }
-                System.out.println(resut);
-                return true;
+
+        //2. Задать пустой целочисленный массив размером 8. С помощью цикла заполнить его значениями 0 3 6 9 12 15 18 21;
+        System.out.println("\r\n\nTask - 2");
+            int[] lag2 = new int[8];
+                for (int i = 1, j = 0; i < lag2.length; i++) lag2[i] = j += 3;
+                for (int x : lag2) System.out.print(x + " ");
+
+        //3. Задать массив [ 1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1 ] пройти по нему циклом, и числа меньшие 6 умножить на 2;
+        System.out.println("\r\n\nTask - 3");
+        System.out.println("Было - 1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1");
+        int[] lag3 = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
+            for (int i = 0; i < lag3.length; i++) {
+                if (lag3[i] < 6) lag3[i] *= 2;
+                System.out.print(lag3[i] + " ");
+        }
+
+        //4. Создать квадратный двумерный целочисленный массив, и с помощью цикла(-ов) заполнить его диагональные элементы единицами;
+        System.out.println("\r\n\nTask - 4");
+        int[][] lag4 = new int[5][5];
+            for (int a = 0; a < lag4.length; a++) {
+                for (int b = 0, b2 = lag4[a].length; b < lag4[a].length; b++, b2--) {
+                    if (a == b || a == (b2 - 1)) lag4[a][b] = 1;
+                System.out.print(lag4[a][b] + " ");
+            }
+                System.out.print("\r\n");
+        }
+
+        //5. ** Задать одномерный массив и найти в нем минимальный и максимальный элементы (без помощи интернета);
+        System.out.println("\r\n\nTask - 5");
+        System.out.println("Элементы - 10, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1");
+        int[] lag5 = {10, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
+        int min = lag5[0], max = lag5[0], indMax = 0, indMin = 0;
+            for (int i = 0; i < lag5.length; i++) {
+                if (lag5[i] > max) {
+                max = lag5[i];
+                indMax = i;
+            }
+                if (lag5[i] < min) {
+                min = lag5[i];
+                indMin = i;
             }
         }
-        return false;
+        System.out.println("Максимальное значение " + max);
+        System.out.println("Минимальное значение  " + min);
+        System.out.println("P/S - Всё же немного подглядел из старых уроков :( Pido perdón.");
     }
 
-    public static void shift(int[] input, int n) {
-        // 1 2 3 4 5 + 10 -> 2 3 4 5 1
-        // 1 2 3 4 5 -1 -> 5 1 2 3 4
-        // -1 = +4
-        // +10 = 0
-        // 10 % 5 = 0
-        // 12 % 5 = +2
-        if (n < 0) {
-            n = -n;
-            n = n % input.length;
-            n = input.length - n;
-        }
-        n = n % input.length; // 4 % 5 = 4
-        System.out.println(n);
-        for (int i = 0; i < n; i++) {
-            int tmp = input[0];
-            //1 2 3 4 5 -> 1, 2 3 4 5 1
-            // 1 2 3 4 5
-            // 2 3 4 5
-            System.arraycopy(input, 1, input, 0, input.length - 1);
-            input[input.length - 1] = tmp;
-        }
-        System.out.println(Arrays.toString(input));
-    }
-
-    public static void shiftON(int[] input, int n) {
-        if (n < 0) {
-            n = -n;
-            n = n % input.length;
-            n = input.length - n;
-        }
-        n = n % input.length;
-        int [] tmp = new int[input.length];
-        int start = n;
-        for (int i = n; i < n + input.length; i++) {
-            tmp[i - n] = input[i % input.length];
-        }
-        System.out.println(Arrays.toString(tmp));
-    }
-
-    public static void main(String[] args) {
-        // checkBalanse(new int[]{1, 3, 2, 5, 3, 1, 4, 3});
-        shiftON(new int[] {1, 2, 3, 4, 5}, 2);
-    }
 }
+© 2020 GitHub, Inc.
