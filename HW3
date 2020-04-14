@@ -1,0 +1,39 @@
+package geekbrains.lession0;
+
+
+import java.util.Scanner;
+
+class HW3 {
+
+    public static void main(String[] args) {
+        playGame ();
+    }
+    public static void playGame() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ваша задача угадать число (0-9)");
+        int range = 10;
+        int number = (int) (Math.random() * range);
+        for (int i = 0; i < 3; i++) {
+            int input_number = scanner.nextInt();
+            if (input_number == number) {
+                System.out.println("Вы угадали");
+                gameAgain();
+            } else if (input_number > number) {
+                System.out.println("Загаданное число меньше");
+            } else {
+                System.out.println("Загаданное число больше");
+            }
+        }
+        System.out.println("попытки закончились");
+        gameAgain();
+    }
+    public static void gameAgain() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("«Повторить игру еще раз? 1 – да / 0 – нет»(1 – повторить, 0 – нет).");
+        int gameAgain = scanner.nextInt();
+        if (gameAgain == 1) {
+            playGame();
+        } else
+            scanner.close();
+    }
+}
