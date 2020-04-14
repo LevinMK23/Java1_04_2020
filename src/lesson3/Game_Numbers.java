@@ -17,7 +17,7 @@ public class Game_Numbers {
             int counter = 0;
             System.out.println("Ваша задача - угадать число от 0 до 1000! У вас " + health + " жизней");
             int randomNumber = (int) (Math.random() * 1001);
-            System.out.println(randomNumber);
+          //  System.out.println(randomNumber);
             while (counter < health) {
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("Введите число");
