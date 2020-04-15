@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class GameXO {
 
+    static int tryCount;
+    static int size;
+
     enum Type {
         X, O, DEFAULT
     }
@@ -16,6 +19,7 @@ public class GameXO {
 
     public static char[][] getInitMap(int size) {
         char[][] map = new char[size][size];
+        tryCount = size * size;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 map[i][j] = EMPTY;
@@ -24,9 +28,16 @@ public class GameXO {
         return map;
     }
 
-    public static void printMap(char [][] map) {
-        int size = map.length;
+    public static void printMap(char[][] map) {
+
+        for (int i = 0; i < size; i++) {
+            System.out.print((i == 0 ? "   " : " ") + (i + 1));
+        }
+
+        System.out.println();
+        int count = 0;
         for (char[] chars : map) {
+            System.out.print(++count + " ");
             for (char sym : chars) {
                 System.out.print("|" + sym);
             }
@@ -34,71 +45,105 @@ public class GameXO {
         }
     }
 
-    public static void humanTurn(char [][] map, int x, int y) {
-        x--; y--;
+    public static void humanTurn(char[][] map, int x, int y) {
+        x--;
+        y--;
         map[x][y] = DOT_X;
+        tryCount--;
     }
 
     private static boolean isCellValid(char[][] map, int x, int y) {
-        x--; y--;
-        int size = map.length;
+        x--;
+        y--;
         if (x >= 0 && x < size && y >= 0 && y < size) {
             return map[x][y] == EMPTY;
         }
         return false;
     }
 
-    private static boolean checkVictory(char[][] map, char dotX) {
-        // TODO: 14.04.2020
-        // dotX dotX dotX
-        // dotX dotX
-        // dotX     dotX
-        return false;
+    private static boolean checkVictory(char[][] map, char dot) {
+
+        boolean d1 = true, d2 = true;
+
+        for (int i = 0; i < size; i++) {
+            //вертикаль, горизонталь
+            boolean n1 = true, n2 = true;
+            for (int j = 0; j < size; j++) {
+                n1 &= (map[i][j] == dot);
+                n2 &= (map[j][i] == dot);
+            }
+            if (n1 || n2) return true;
+
+            //диагонали
+            d1 &= (map[i][i] == dot);
+            d2 &= (map[size - 1 - i][i] == dot);
+        }
+        return d1 || d2;
     }
 
-    private static void robotTurn(char[][] map, int x, int y) {
+    private static void robotTurn(char[][] map) {
         // TODO: 14.04.2020 random
-        int size = map.length;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (map[i][j] == EMPTY) {
-                    map[i][j] = DOT_O;
-                    return;
-                }
+        while (true) {
+            int x = (int) (Math.random() * size);
+            int y = (int) (Math.random() * size);
+            if (isCellValid(map, x + 1, y + 1)) {
+                map[x][y] = DOT_O;
+                tryCount--;
+                break;
             }
         }
     }
 
     public static void main(String[] args) {
-        char [][] map = getInitMap(3);
+        Scanner in = new Scanner(System.in);
         System.out.println("Приветствую вас в игре Крестики Нолики!");
+        System.out.println("Введите размер поля!");
+        size = in.nextInt();
+        char[][] map = getInitMap(size);
         System.out.println("Перед вами поле:");
         printMap(map);
         System.out.println("Вы играете Крестиками!");
         System.out.println("Чтобы сделать ход, введите номер строки и номер столбца на поле:");
-        Scanner in = new Scanner(System.in);
+
         while (true) {
             System.out.println("Ваш ход:");
             int x = in.nextInt(), y = in.nextInt();
             if (isCellValid(map, x, y)) {
+                if (tryCount == 0) {
+                    System.out.println("Ничья");
+                    break;
+                }
                 humanTurn(map, x, y);
                 printMap(map);
-                // TODO: 14.04.2020 отследить ничью
                 if (checkVictory(map, DOT_X)) {
                     System.out.println("Вы победили");
-                    // TODO: 14.04.2020 что делать дальше???
+                    printMap(map);
+                    break;
+                }
+                if (tryCount == 0) {
+                    System.out.println("Ничья");
+                    break;
                 }
                 System.out.println("Ход компьютера:");
-                robotTurn(map, x, y);
+                robotTurn(map);
                 if (checkVictory(map, DOT_O)) {
                     System.out.println("Вы проиграли");
-                    // TODO: 14.04.2020 что делать дальше???
+                    printMap(map);
+                    break;
                 }
                 printMap(map);
             } else {
+                printMap(map);
                 System.out.println("Введены некорректные данные! Введите еще раз");
-                // TODO: 14.04.2020 user friendly help comments
             }
+        }
+        System.out.println("Еще одна игра? 1 - да");
+        String s[] = new String[0];
+        try {
+            if (in.nextInt() == 1) {
+                main(s);
+            }
+        } catch (Exception e) {
         }
     }
 
