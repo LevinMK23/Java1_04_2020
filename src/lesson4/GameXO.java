@@ -166,17 +166,4 @@ public class GameXO {
         }
     }
 
-//    private static void robotTurn(char[][] map, int x, int y) {
-//        // TODO: 14.04.2020 random - СДЕЛАНО
-//        int size = map.length;
-//        for (int i = 0; i < size; i++) {
-//            for (int j = 0; j < size; j++) {
-//                if (map[i][j] == EMPTY) {
-//                    map[i][j] = DOT_O;
-//                    return;
-//                }
-//            }
-//        }
-//    }
-
 }
