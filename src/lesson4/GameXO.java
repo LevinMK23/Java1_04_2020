@@ -4,12 +4,6 @@ import java.util.Scanner;
 
 public class GameXO {
 
-    enum Type {
-        X, O, DEFAULT
-    }
-
-    private final static Type empty = Type.DEFAULT;
-
     private final static char EMPTY = '_';
     private final static char DOT_X = 'X';
     private final static char DOT_O = 'O';
