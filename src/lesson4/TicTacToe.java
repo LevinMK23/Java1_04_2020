@@ -75,8 +75,20 @@ public class TicTacToe {
         return false;
     }
 
-    private static boolean checkVictory(char[][] map, char dotX) {
+    private static boolean checkVictory(char[][] map, char dot) {
         // 14.04.2020
+        /*
+        for (int i = 0; i < cells; i++) {
+            boolean xf = true, yf = true, d1 = true, d2 = true;
+            for (int j = 0; j < cells; j++) {
+                xf &= (map[i][j] == dot);
+                yf &= (map[j][i] == dot);
+                d1 &= map[i][i] == dot;
+                d2 &= map[i][cells - i - 1] == dot;
+            }
+            if (xf || yf || d1 || d2) return true;
+        }
+        */
         // dotX dotX dotX
         // dotX dotX
         // dotX     dotX
@@ -119,13 +131,19 @@ public class TicTacToe {
         int size = map.length;
         int celX, celY;
         do {
+            /*
+            System.out.println("*");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            */
             celX = random.nextInt(size);
             celY = random.nextInt(size);
         } while (!isRandomCellValid(celX, celY) && map[celX][celY] != EMPTY);
         map[celX][celY] = DOT_O;
-        ++celX;
-        ++celY;
-        System.out.println("Computer turn (2): " + (celX) + " " + (celY));
+        System.out.println("Computer turn (2): " + (++celX) + " " + (++celY));
     }
 
     private static void robotTurn() {
@@ -166,29 +184,43 @@ public class TicTacToe {
         System.out.println("You play by Crosses!");
         System.out.println("To make a move, enter the row and column number:");
         Scanner in = new Scanner(System.in);
+
         while (true) {
+            //int x = in.nextInt(), y = in.nextInt();//with this line we can get an error
+            //changing line above
             System.out.println("Your turn:");
-            int x = in.nextInt(), y = in.nextInt();
+            int x, y;
+            try {
+                x = in.nextInt();
+                //System.out.println("1");
+                y = in.nextInt();
+                //System.out.println("2");
+            } catch (Exception e) {
+                System.err.println("Incorrect details");
+                in = new Scanner(System.in);
+                continue;
+            }
+
             if (isCellValid(x, y)) {
                 humanTurn(map, x, y);
                 printMap(map);
                 if (checkVictory(map, DOT_X)) {
                     System.out.println("You win");
                     // 14.04.2020 что делать дальше???
-                    break;
+                    return;
                 }
                 // 14.04.2020 отследить ничью
                 if(isThereAnotherWay()) {
                     printMap(map);
                     System.out.println("It's a draw!");
-                    break;
+                    return;
                 }
                 robotTurn();
                 printMap(map);
                 if (checkVictory(map, DOT_O)) {
                     System.out.println("GAME OVER\nComputer win");
                     // 14.04.2020 что делать дальше???
-                    break;
+                    return;
                 }
             } else {
                 // 14.04.2020 user friendly help comments
