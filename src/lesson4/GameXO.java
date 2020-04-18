@@ -1,5 +1,6 @@
 package lesson4;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameXO {
@@ -8,7 +9,9 @@ public class GameXO {
         X, O, DEFAULT
     }
 
+    private static final Random rnd = new Random();
     private final static Type empty = Type.DEFAULT;
+    private static int steps = 0;
 
     private final static char EMPTY = '_';
     private final static char DOT_X = 'X';
@@ -35,12 +38,11 @@ public class GameXO {
     }
 
     public static void humanTurn(char [][] map, int x, int y) {
-        x--; y--;
         map[x][y] = DOT_X;
+        steps++;
     }
 
     private static boolean isCellValid(char[][] map, int x, int y) {
-        x--; y--;
         int size = map.length;
         if (x >= 0 && x < size && y >= 0 && y < size) {
             return map[x][y] == EMPTY;
@@ -48,25 +50,36 @@ public class GameXO {
         return false;
     }
 
-    private static boolean checkVictory(char[][] map, char dotX) {
-        // TODO: 14.04.2020
-        // dotX dotX dotX
-        // dotX dotX
-        // dotX     dotX
+    private static boolean checkVictory(char[][] map, char dot) {
+        int size = map.length;
+        for (int i = 0; i < size; i++) {
+            boolean xf = true, yf = true, d1 = true, d2 = true;
+            for (int j = 0; j < size; j++) {
+                xf &= (map[i][j] == dot);
+                yf &= (map[j][i] == dot);
+                d1 &= (map[j][j] == dot);
+                d2 &= (map[j][size - j - 1] == dot);
+            }
+            if (xf || yf || d1 || d2) return true;
+        }
         return false;
     }
 
-    private static void robotTurn(char[][] map, int x, int y) {
-        // TODO: 14.04.2020 random
-        int size = map.length;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (map[i][j] == EMPTY) {
-                    map[i][j] = DOT_O;
-                    return;
-                }
+    private static void robotTurn(char[][] map) {
+        int size = map.length, tx = 0, ty = 0;
+        do {
+            System.out.print("*");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }
+            tx =  1 + rnd.nextInt(size); // [0; size-1]
+            ty = 1 + rnd.nextInt(size);
+        } while (!isCellValid(map, tx, ty));
+        map[tx][ty] = DOT_O;
+        System.out.println();
+        steps++;
     }
 
     public static void main(String[] args) {
@@ -77,22 +90,41 @@ public class GameXO {
         System.out.println("Вы играете Крестиками!");
         System.out.println("Чтобы сделать ход, введите номер строки и номер столбца на поле:");
         Scanner in = new Scanner(System.in);
-        while (true) {
+
+        while (true) { // *
             System.out.println("Ваш ход:");
-            int x = in.nextInt(), y = in.nextInt();
+            int x, y;
+            try {
+                x = in.nextInt(); // может быть ошибка
+                System.out.println("1");
+                y = in.nextInt(); // может быть ошибка
+                System.out.println("2");
+                x--;
+                y--;
+            } catch (Exception e) {
+                System.err.println("Введены некорректные данные");
+                in = new Scanner(System.in);
+                continue;
+            }
+
             if (isCellValid(map, x, y)) {
                 humanTurn(map, x, y);
                 printMap(map);
                 // TODO: 14.04.2020 отследить ничью
                 if (checkVictory(map, DOT_X)) {
                     System.out.println("Вы победили");
-                    // TODO: 14.04.2020 что делать дальше???
+                    return;
                 }
                 System.out.println("Ход компьютера:");
-                robotTurn(map, x, y);
+                // if exists step
+                if (steps == 9) {
+                    System.out.println("Ничья!");
+                    return;
+                }
+                robotTurn(map);
                 if (checkVictory(map, DOT_O)) {
                     System.out.println("Вы проиграли");
-                    // TODO: 14.04.2020 что делать дальше???
+                    return;
                 }
                 printMap(map);
             } else {
