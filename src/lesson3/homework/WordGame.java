@@ -17,7 +17,7 @@ public class WordGame {
     public static void game() {
         System.out.println("Я загадал слово, попробуй его угадать");
         String pcWord = words[rnd.nextInt(words.length)];
-        char [] chars = new char[15];
+        char[] chars = new char[15];
         Arrays.fill(chars, '#');
         Scanner in = new Scanner(System.in);
         while (true) {
