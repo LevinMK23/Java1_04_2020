@@ -1,137 +1,150 @@
-package lesson4;
+package Lesson4_HW4;
 
 import java.util.Random;
 import java.util.Scanner;
 
-public class GameXO {
+public class GameTicTacToeHW4 {
+    // настройки игры
+    private static char[][] map; // поле игры
+    private static final int SIZE = 3;
 
-    enum Type {
-        X, O, DEFAULT
+    private final static char EMPTY = '_';      // пустое поле
+    private final static char DOT_X = 'X';      // кретики
+    private static char DOT_O = 'O';            // нолики
+
+    private static Scanner scanner = new Scanner(System.in);
+    private static Random random = new Random();
+
+    public static void main(String[] args) {
+        intMap();
+        printMap();
+
+        while (true) {
+            humanTurn();     // ход игрока
+            if (isEndGame(DOT_X)) {
+                break;
+            }
+
+            computerTurn();
+            if (isEndGame(DOT_O)) {
+                break;
+            }
+        }
+        System.out.println("Игра окончена!");
     }
 
-    private static final Random rnd = new Random();
-    private final static Type empty = Type.DEFAULT;
-    private static int steps = 0;
-
-    private final static char EMPTY = '_';
-    private final static char DOT_X = 'X';
-    private final static char DOT_O = 'O';
-
-    public static char[][] getInitMap(int size) {
-        char[][] map = new char[size][size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+    // логика игры
+    private static void intMap() {
+        map = new char[SIZE][SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 map[i][j] = EMPTY;
             }
         }
-        return map;
     }
 
-    public static void printMap(char [][] map) {
-        int size = map.length;
-        for (char[] chars : map) {
-            for (char sym : chars) {
-                System.out.print("|" + sym);
-            }
-            System.out.println("|");
+    // игровая логика
+    private static void printMap() {
+        for (int i = 0; i <= SIZE; i++) {
+            System.out.print(i + " ");
         }
-    }
-
-    public static void humanTurn(char [][] map, int x, int y) {
-        map[x][y] = DOT_X;
-        steps++;
-    }
-
-    private static boolean isCellValid(char[][] map, int x, int y) {
-        int size = map.length;
-        if (x >= 0 && x < size && y >= 0 && y < size) {
-            return map[x][y] == EMPTY;
-        }
-        return false;
-    }
-
-    private static boolean checkVictory(char[][] map, char dot) {
-        int size = map.length;
-        for (int i = 0; i < size; i++) {
-            boolean xf = true, yf = true, d1 = true, d2 = true;
-            for (int j = 0; j < size; j++) {
-                xf &= (map[i][j] == dot);
-                yf &= (map[j][i] == dot);
-                d1 &= (map[j][j] == dot);
-                d2 &= (map[j][size - j - 1] == dot);
-            }
-            if (xf || yf || d1 || d2) return true;
-        }
-        return false;
-    }
-
-    private static void robotTurn(char[][] map) {
-        int size = map.length, tx = 0, ty = 0;
-        do {
-            System.out.print("*");
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            tx =  1 + rnd.nextInt(size); // [0; size-1]
-            ty = 1 + rnd.nextInt(size);
-        } while (!isCellValid(map, tx, ty));
-        map[tx][ty] = DOT_O;
         System.out.println();
-        steps++;
+
+        for (int i = 0; i < SIZE; i++) {
+            System.out.print((i + 1) + "|");
+            for (int j = 0; j < SIZE; j++) {
+                System.out.print(map[i][j] + "|");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
-    public static void main(String[] args) {
-        char [][] map = getInitMap(3);
-        System.out.println("Приветствую вас в игре Крестики Нолики!");
-        System.out.println("Перед вами поле:");
-        printMap(map);
-        System.out.println("Вы играете Крестиками!");
-        System.out.println("Чтобы сделать ход, введите номер строки и номер столбца на поле:");
-        Scanner in = new Scanner(System.in);
+    private static void humanTurn() {       // наш ход
+        int x, y;
+        do {
+            System.out.println("Введите данные для хода - горизонталь - вертикаль через пробел.");
+            y = scanner.nextInt() - 1;
+            x = scanner.nextInt() - 1;
+        } while (!isCellValid(x, y));
 
-        while (true) { // *
-            System.out.println("Ваш ход:");
-            int x, y;
-            try {
-                x = in.nextInt(); // может быть ошибка
-                System.out.println("1");
-                y = in.nextInt(); // может быть ошибка
-                System.out.println("2");
-                x--;
-                y--;
-            } catch (Exception e) {
-                System.err.println("Введены некорректные данные");
-                in = new Scanner(System.in);
-                continue;
+        map[y][x] = DOT_X; // y- вертикаль. x-горизонталь
+    }
+
+    private static void computerTurn() {        // ход компьютера
+        int x = -1;
+        int y = -1;
+
+        do {
+            x = random.nextInt(SIZE);
+            y = random.nextInt(SIZE);
+        } while(!isCellValid(x, y));
+        System.out.println("Компьютер сделал ход в " + (y + 1) + " " + ( + 1));
+        map[y][x] = DOT_O;
+
+    }
+
+    private static boolean isCellValid(int x, int y) {
+        boolean result = true;
+
+
+        if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {      // проверка корректности координат
+            result = false;
+        }
+        if (map[y][x] != EMPTY) {        // проверка заполнения данных (X/O)
+            result = false;
+        }
+        return result;
+    }
+
+    private static boolean isEndGame(char playerSymbol) {
+        boolean result = false;
+        printMap();
+
+        if (checkWin(playerSymbol)) {
+            System.out.println("Победили " + playerSymbol + "-ики!");
+            result = true;
+        }
+        if (isMapFull()) {
+            System.out.println("Ничья");
+            result = true;
+        }
+
+        return result;
+    }
+
+    private static boolean isMapFull() {        // проверка заполняемости масива(полей игры)
+        boolean result = true;
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (map[i][j] == EMPTY) {
+                    result = false;
+                    break;
+                }
             }
 
-            if (isCellValid(map, x, y)) {
-                humanTurn(map, x, y);
-                printMap(map);
-                // TODO: 14.04.2020 отследить ничью
-                if (checkVictory(map, DOT_X)) {
-                    System.out.println("Вы победили");
-                    return;
-                }
-                System.out.println("Ход компьютера:");
-                // if exists step
-                if (steps == 9) {
-                    System.out.println("Ничья!");
-                    return;
-                }
-                robotTurn(map);
-                if (checkVictory(map, DOT_O)) {
-                    System.out.println("Вы проиграли");
-                    return;
-                }
-                printMap(map);
-            } else {
-                System.out.println("Введены некорректные данные! Введите еще раз");
-                // TODO: 14.04.2020 user friendly help comments
+            if (!result) { // для поиска первой пустой клетки
+                break;
             }
         }
+        return result;
     }
 
+
+    private static boolean checkWin(char playerSymbol) {
+        boolean result = false;
+        if (
+        (map[0][0] == playerSymbol && map[0][1] == playerSymbol && map[0][2] == playerSymbol) ||
+        (map[1][0] == playerSymbol && map[1][1] == playerSymbol && map[1][2] == playerSymbol) ||
+        (map[2][0] == playerSymbol && map[2][1] == playerSymbol && map[2][2] == playerSymbol) ||
+        (map[0][0] == playerSymbol && map[1][0] == playerSymbol && map[2][0] == playerSymbol) ||
+        (map[0][1] == playerSymbol && map[1][1] == playerSymbol && map[2][1] == playerSymbol) ||
+        (map[0][2] == playerSymbol && map[1][2] == playerSymbol && map[2][2] == playerSymbol) ||
+        (map[0][0] == playerSymbol && map[1][1] == playerSymbol && map[2][2] == playerSymbol) ||
+        (map[2][0] == playerSymbol && map[1][1] == playerSymbol && map[0][2] == playerSymbol)){
+            result = true;
+        }
+        return result;
+    }
 }
