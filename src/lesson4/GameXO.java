@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class GameXO {
 
+
     private final static char EMPTY = '_';
     private final static char DOT_X = 'X';
     private final static char DOT_O = 'O';
@@ -29,6 +30,7 @@ public class GameXO {
         return map;
     }
 
+
     public static void printMap(char[][] map) {
         int size = map.length;
 
@@ -42,7 +44,6 @@ public class GameXO {
 
         for (char[] chars : map) {
             System.out.print(i);
-
             for (char sym : chars) {
                 System.out.print("|" + sym);
             }
@@ -60,6 +61,7 @@ public class GameXO {
     private static boolean isCellValid(char[][] map, int x, int y) {
         x--;
         y--;
+
         if (x >= 0 && x < size && y >= 0 && y < size) {
             return map[x][y] == EMPTY;
         }
@@ -113,11 +115,11 @@ public class GameXO {
         System.out.println("Приветствую вас в игре Крестики Нолики!");
         System.out.println("Перед вами поле:");
 
+
         printMap(map);
         System.out.println("Вы играете Крестиками!");
         System.out.println("Чтобы сделать ход, введите номер строки и номер столбца на поле:");
         Scanner in = new Scanner(System.in);
-
         while (true) {
             System.out.println("Ваш ход");
             System.out.print("Введите коорадинату X: ");
