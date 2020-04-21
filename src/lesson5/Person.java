@@ -8,7 +8,7 @@ public class Person {
     private String name, position, email, phone;
     private int gross, age;
 
-    public Person(String name, String position, String email, String phone, int gross, int age){
+    public Person(String name, String position, String email, String phone, int gross, int age) {
         this.name = name;
         this.position = position;
         this.email = email;
@@ -28,37 +28,35 @@ public class Person {
         return age;
     }
 
-    public int getGross(){
+    public int getGross() {
         return gross;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public String getPosition(){
+    public String getPosition() {
         return position;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public String getPhone(){
+    public String getPhone() {
         return phone;
     }
 
 
     // Вывод информации по сотруднику, общая
 
-    public void persInfo(){
+    public void persInfo() {
         System.out.println("=====================");
         System.out.println("Анкета сотрудника");
-        System.out.println("Имя сотрудника: " + name + '\n' + "Должность: " + position + '\n' + "Эл. почта: "+ email + '\n' + "Телефон: " + phone + '\n' + "Зарплата: " + gross + '\n' + "Возраст: " + age);
+        System.out.println("Имя сотрудника: " + name + '\n' + "Должность: " + position + '\n' + "Эл. почта: " + email + '\n' + "Телефон: " + phone + '\n' + "Зарплата: " + gross + '\n' + "Возраст: " + age);
         System.out.println("=====================");
     }
-
-
 
 
 }
