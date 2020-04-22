@@ -12,6 +12,13 @@ public class CatTest {
         Cat cat1 = new Cat("Barsik");
         Cat cat2 = new Cat("Boris");
         Cat cat3 = new Cat("Murzik");
+        try {
+            System.out.println(1);
+            Thread.sleep(2500);
+            System.out.println(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         cat1.live();
         cat3.live();
         cat1.say();
