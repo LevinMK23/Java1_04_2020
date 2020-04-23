@@ -25,4 +25,8 @@ public class Cat extends Animal implements Runnable, Jumpable {
     public void run() {
         System.out.println("I'm running");
     }
+
+    
+
+
 }
