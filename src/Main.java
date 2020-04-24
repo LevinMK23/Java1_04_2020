@@ -1,7 +1,13 @@
+
 public class Main {
-    //psvm public static void main
+
     public static void main(String[] args) {
-        //sout
-        System.out.println("Hello world");
+        Dog dog1 = new Dog("Dod", "Dog1");
+        Cat cat1 = new Cat("Cat", "Cat1");
+        dog1.run(499);
+        dog1.swim(9);
+        cat1.run(201);
+        cat1.swim(5);
+        System.out.println("Кол-во кото-собачек: " + Animal.getCounter());
     }
 }
