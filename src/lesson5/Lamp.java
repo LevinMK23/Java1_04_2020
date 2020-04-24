@@ -1,37 +1,29 @@
-package lesson5;
+package Lesson5_HW5;
 
-public class Lamp {
+public class Colleague {
 
-    private boolean isOn;
-    // Функция с именем класса - это особая функция,
-    // которая называется конструктор (она создает инстанс класса)
-    public Lamp() {
-        isOn = false;
+    //private Object getMax;
+
+
+    private Colleague(String иванов_иван_, String s, String s1, String s2, int i, int i1) {
     }
 
-    public Lamp(boolean isOn) {
-        this.isOn = isOn;
-    }
+    public static void main(String[] args) {
 
-    public void on() {
-        if (isOn) {
-            System.out.println("И так включена!");
-        } else {
-            isOn = true;
-            System.out.println("Вы включили лампочку");
+        Colleague[] collArray = new Colleague[5];
+        collArray[0] = new Colleague("Иванов Иван ", "Начальник Тех. отдела ", "IvanIvan@person.ru ", "  8 912 345 67 89 ", 50000, 42);
+        collArray[1] = new Colleague("Петров Петр ", "Менеджер ", "PetrovPetr@person.ru ", "  8 912 345 67 89 ", 35000, 33);
+        collArray[2] = new Colleague("Сидоров Даниил ", "Эксперт ", "SidorovDaniil@person.ru ", "  8 912 345 67 89 ", 35000, 40);
+        collArray[3] = new Colleague("Попов Алексей ", "Специалист ", "PopovAlex@person.ru ", "  8 912 345 67 89 ", 50000, 37);
+        collArray[4] = new Colleague("Корнеев Дмитрий ", "Мастер наладчик ", "KornDmitr@person.ru ", "  8 912 345 67 89 ", 50000, 56);
+
+        collArray[0].getMax); // те кто свыше 40
+
+
+        for (int i = 0; i < ; i++) {
+            if(collArray[i].getMax() >= 40){
+                System.out.println("Сотрудниками в возрасте 40 лет и выше у нас являются: ");
+            }
         }
-    }
-
-    public void off() {
-        if (!isOn) {
-            System.out.println("И так выключена!");
-        } else {
-            isOn = false;
-            System.out.println("Вы выключили лампочку");
-        }
-    }
-
-    public boolean isOn() {
-        return isOn;
     }
 }
