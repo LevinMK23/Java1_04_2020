@@ -1,4 +1,9 @@
 # Project exclude paths
 /out/
 .idea/
+/META-INF
+/lesson1
+/lesson2
+/lesson3
+*Java1_04_2020.iml
 .gitignore
