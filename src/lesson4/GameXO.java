@@ -51,20 +51,25 @@ public class GameXO {
         }
     }
 
+
     public static void humanTurn(char[][] map, int x, int y) {
         x--;
         y--;
         map[x][y] = DOT_X;
+        steps++;
     }
 
     private static boolean isCellValid(char[][] map, int x, int y) {
+
         x--;
         y--;
+
         if (x >= 0 && x < size && y >= 0 && y < size) {
             return map[x][y] == EMPTY;
         }
         return false;
     }
+
 
     private static boolean checkVictory(char[][] map, char DOT_X) {
         // TODO: 14.04.2020 - Только для поля 3х3 - Сделано
@@ -97,10 +102,13 @@ public class GameXO {
     }
 
     public static boolean drawCheck(char[][] map) {
+
         for (int i = 0; i < size; i++) {
+            boolean xf = true, yf = true, d1 = true, d2 = true;
             for (int j = 0; j < size; j++) {
                 if (map[i][j] == EMPTY) return false;
             }
+            if (xf || yf || d1 || d2) return true;
         }
         return true;
     }
@@ -117,13 +125,13 @@ public class GameXO {
         System.out.println("Вы играете Крестиками!");
         System.out.println("Чтобы сделать ход, введите номер строки и номер столбца на поле:");
         Scanner in = new Scanner(System.in);
-
         while (true) {
             System.out.println("Ваш ход");
             System.out.print("Введите коорадинату X: ");
             int x = in.nextInt();
             System.out.print("Введите коорадинату Y: ");
             int y = in.nextInt();
+
             if (isCellValid(map, x, y)) {
                 humanTurn(map, x, y);
                 printMap(map);
@@ -140,6 +148,7 @@ public class GameXO {
                 }
 
                 System.out.println("Ход компьютера:");
+
                 robotTurnRandom(map, x, y); // Робот ходит непредсказуемо (рандом)
                 printMap(map);
                 if (checkVictory(map, DOT_O)) {
