@@ -1,33 +1,23 @@
-package lesson5;
-
-import lesson5.Cat;
+package Lesson5;
 
 import java.util.Random;
 
 public class CatTest {
-
-    // IpLookUp -> ip ->
-    // Переводчик
     public static void main(String[] args) {
-        Cat cat1 = new Cat("Barsik");
-        Cat cat2 = new Cat("Boris");
-        Cat cat3 = new Cat("Murzik");
-        try {
-            System.out.println(1);
-            Thread.sleep(2500);
-            System.out.println(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Cat cat1 = new Cat("Aricha");
+        Cat cat2 = new Cat("Laska");
+        Cat cat3 = new Cat("Duchka");
+        Cat cat4 = new Cat("Murzic");
         cat1.live();
-        cat3.live();
         cat1.say();
+        cat1.jump(new Random().nextInt(5));
         cat1.run(new Random().nextInt(1000));
-        cat1.jump(1);
-        System.out.println(cat2.getAge());
-        cat1.setAge(17);
+        cat1.food(new Random().nextInt(200));
+        cat1.nascalVtapki(new Random().nextInt(5));
+        System.out.println(cat1.getAge());
         System.out.println(cat1);
         System.out.println(cat2);
         System.out.println(cat3);
+        System.out.println(cat4);
     }
 }
