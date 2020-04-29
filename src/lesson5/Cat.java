@@ -1,12 +1,11 @@
-package lesson5;
+package Lesson5;
 
 import java.util.Random;
 
 public class Cat {
-
     private String name;
     private CatColor color;
-    private int age, runLimit, jumpLimit;
+    private int age, runLimit, jumpLimit, foodLimit, nascalVtapkiLimit;
     private final static Random rnd = new Random();
 
     @Override
@@ -17,6 +16,8 @@ public class Cat {
                 ", age=" + age +
                 ", runLimit=" + runLimit +
                 ", jumpLimit=" + jumpLimit +
+                ", foodLimit=" + foodLimit +
+                ", nascalVtapkiLimit=" + nascalVtapkiLimit +
                 '}';
     }
 
@@ -24,43 +25,48 @@ public class Cat {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public Cat(String name) {
         this.name = name;
-        age = 0;
-        color = CatColor
-                .values()[rnd.nextInt(CatColor.values().length)];
-        runLimit = 100 + rnd.nextInt(1000);
-        jumpLimit = 1 + rnd.nextInt(4); // [0; 3]
+        age = 1;
+        color = CatColor.values()[rnd.nextInt(CatColor.values().length)];
+        runLimit = rnd.nextInt(1000);
+        jumpLimit = rnd.nextInt(5);
+        foodLimit = rnd.nextInt(500);
+        nascalVtapkiLimit = rnd.nextInt(5);
     }
 
-
-
-    void live() {
+    public void live() {
         age++;
     }
 
     public void say() {
-        System.out.println("MEOW");
+        System.out.println("МААААААУ");
     }
 
     public void run(int limit) {
-        if (runLimit > limit) {
-            System.out.println("Я пробежал " + limit + " метров!");
+        if (runLimit < limit) {
+            System.out.println("Я смОг пробежать " + runLimit + " метров!");
         }
     }
 
     public void jump(int limit) {
-        if (jumpLimit > limit) {
-            System.out.println("Я прыгнул на " + limit + " метров!");
+        if (jumpLimit < limit) {
+            System.out.println("Я смОг прыгнуть на " + jumpLimit + " метров!");
         }
     }
 
-    public void mstitVtapki() {
-
+    public void food(int limit) {
+        if (foodLimit < limit) {
+            System.out.println("И поэтому я съем " + foodLimit + " грамм вкусняшки !");
+        }
     }
 
+    public void nascalVtapki(int limit) {
+        //new Cat("Laska") {
+        if (nascalVtapkiLimit < limit) {
+            System.out.println("А раз ты такой жмот я " + nascalVtapkiLimit + " раза нассу тебе в тапки :) ");
+        }
+    }
 }
+
+
