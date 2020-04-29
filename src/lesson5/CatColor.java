@@ -1,6 +1,5 @@
-package lesson5;
+package Lesson5;
 
 public enum CatColor {
-    BLACK, WHITE, ORANGE,
-    GRAY, PINK, YELLOW
+    BLACK, WHITE, ORANGE, GRAY, PINK, YELLOW
 }
