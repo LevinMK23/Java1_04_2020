@@ -1,37 +1,0 @@
-
-l	java:S116"PRename this field "EMPTY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£Ãóş8ÀÈñ„.
-[
-java:S1611*"9Remove the parentheses around the "actionEvent" parameter(„ŒŒÿÿÿÿÿ8ÀÈñ„.
-@
-java:S1148S"#Use a logger to log this exception.(ˆáù×8ÀÈñ„.
-E
-java:S1068"(Remove this unused "SIZE" private field.(Ö¤ß¾8ÀÈñ„.
-r	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´¦«øÿÿÿÿ8ÀÈñ„.
-I
-java:S1602'",Remove useless curly braces around statement(¬ªí8ÀÈñ„.
-X	java:S110"<This class has 6 parents which is greater than 5 authorized.(·«‰8ÀÈñ„.
-p	java:S116"TRename this field "DOT_O_IMG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(â£Õ¿8ÀÈñ„.
->
-java:S1170"!Make this final field static too.(Ö¤ß¾8ÀÈñ„.
-k	java:S116"ORename this field "SIZE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ö¤ß¾8ÀÈñ„.
-E
-java:S1148Q"#Use a logger to log this exception.(µ•—Ÿúÿÿÿÿ8ÀÈñ„.
-N
-java:S1602*",Remove useless curly braces around statement(„ŒŒÿÿÿÿÿ8ÀÈñ„.
-A
-java:S2119Œ"Save and re-use this "Random".(šŸ«íøÿÿÿÿ8ÀÈñ„.
-@
-java:S1148O"#Use a logger to log this exception.(½×‰è8ÀÈñ„.
-[
-java:S1611H"9Remove the parentheses around the "ActionEvent" parameter(´¦«øÿÿÿÿ8ÀÈñ„.
-p	java:S116"TRename this field "DOT_X_IMG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªÔëÀ8ÀÈñ„.
-k	java:S116"ORename this field "ICON" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ú×µ€8ÀÈñ„.
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Çª¦Õûÿÿÿÿ8ÀÈñ„.
-V
-java:S1611'"9Remove the parentheses around the "actionEvent" parameter(¬ªí8ÀÈñ„.
-o
-java:S3776^"RRefactor this method to reduce its Cognitive Complexity from 35 to the 15 allowed.(ğÈ¤8ÀÈñ„.
-ƒ
-java:S1130å"eRemove the declaration of thrown exception 'java.awt.HeadlessException' which is a runtime exception.(Ä¦§§8ÀÈñ„.
-u
-java:S3776—"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(å Âãşÿÿÿÿ8ÀÈñ„.
