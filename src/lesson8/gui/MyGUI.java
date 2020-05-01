@@ -1,15 +1,17 @@
-package lesson8.gui;
+package Lesson8_HW8;
 
-import javax.swing.*;
-
-public class MyGUI {
-    private JButton button1;
-    private JPanel panel1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
-    private JButton button5;
-    private JButton button6;
-    private JButton button7;
-    private JList list1;
+public class GameClass {
+    public static void main(String[] args) {
+        Game game
+    }
 }
+/*
+public class Game {
+    private GameBoard board;
+    private GamePlayer[] gamePlayers = new GamePlayer[2];
+    private int playersTurn = 0;        // текущий игрок
+
+    public  Game(){
+        this.board = GameBoard(this.);
+    }
+ */
