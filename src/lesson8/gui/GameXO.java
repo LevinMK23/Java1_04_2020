@@ -1,94 +1,246 @@
 package lesson8.gui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.util.Random;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class GameXO extends JFrame {
-
-    private JButton [][] map;
-    private final ImageIcon DOT_X = new ImageIcon("src\\lesson8\\gui\\res\\x.jpg");
-    private final ImageIcon DOT_O = new ImageIcon("src\\lesson8\\gui\\res\\o.jpg");
-    private final ImageIcon EMPTY = new ImageIcon("src\\lesson8\\gui\\res\\empty.jpg");
+    private final int SIZE = 3;
+    private JButton[][] map = new JButton[3][3];
+    private final ImageIcon DOT_X_IMG = new ImageIcon("src\\lesson8\\gui\\res\\X.png");
+    private final ImageIcon DOT_O_IMG = new ImageIcon("src\\lesson8\\gui\\res\\O.png");
+    private final ImageIcon EMPTY = new ImageIcon("src\\lesson8\\gui\\res\\empty2.jpg");
+    private final ImageIcon ICON = new ImageIcon("src\\lesson8\\gui\\res\\icon.png");
+    private int playerTurn;
+    private File soundWin = new File("src\\lesson8\\gui\\res\\WinSound.wav");
+    private File soundLose = new File("src\\lesson8\\gui\\res\\LoseSound.wav");
 
     private JMenu createFileMenu() {
         JMenu file = new JMenu("Файл");
-        JMenuItem open = new JMenuItem("Новая игра");
-        JMenuItem save = new JMenuItem("Сохранить");
+        JMenuItem newGame = new JMenuItem("Новая игра");
         JMenuItem exit = new JMenuItem("Выход");
-        exit.addActionListener(actionEvent -> {
-            dispose();
+        exit.addActionListener((actionEvent) -> {
+            System.exit(0);
         });
-        save.addActionListener(act -> {
-            File fSave = new File("src\\lesson8\\gui\\res\\saved.txt");
-            try (PrintWriter pr = new PrintWriter(fSave)) {
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        if (map[i][j].getIcon().equals(DOT_X)) {
-                            pr.print("x");
-                        } else if (map[i][j].getIcon().equals(DOT_O)){
-                            pr.print("o");
-                        } else {
-                            pr.print("_");
-                        }
-                    }
-                    pr.println();
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+        newGame.addActionListener((actionEvent) -> {
+            this.newGame();
         });
-        open.addActionListener(actionEvent -> {
-            new GameXO("Крестики нолики");
-            dispose();
-        });
-        file.add(open);
-        file.addSeparator();
-        file.add(save);
+        file.add(newGame);
         file.addSeparator();
         file.add(exit);
         return file;
     }
 
-    private JPanel getMap() {
-        map = new JButton[3][3];
-        JPanel panel = new JPanel(new GridLayout(3,3));
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                map[i][j] = new JButton();
-                map[i][j].setIcon(EMPTY);
-                JButton tmp = map[i][j];
-                tmp.addActionListener(actionEvent -> {
-                    tmp.setIcon(DOT_X);
-                    tmp.setEnabled(false);
-                    tmp.setDisabledIcon(DOT_X);
-                    // TODO: 28.04.2020 PC logic integration and check victory
-                    // tmp.isEnabled() == false - на кнопке тригерилось какое то событие
+    private void newGame() {
+        this.dispose();
+        new GameXO();
+    }
+
+    public void playSoundOnClick(File sound) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        AudioInputStream inAudio = AudioSystem.getAudioInputStream(sound);
+        Clip clip = AudioSystem.getClip();
+        clip.open(inAudio);
+        clip.setFramePosition(0);
+        clip.start();
+    }
+
+    private JPanel gameField() {
+        JPanel panel = new JPanel(new GridLayout(3, 3));
+
+        for(int i = 0; i < 3; ++i) {
+            for(int j = 0; j < 3; ++j) {
+                this.map[i][j] = new JButton();
+                this.map[i][j].setIcon(this.EMPTY);
+                JButton currentCell = this.map[i][j];
+                currentCell.addActionListener((ActionEvent) -> {
+                    currentCell.setDisabledIcon(this.DOT_X_IMG);
+                    currentCell.setEnabled(false);
+
+                    try {
+                        this.checkGame();
+                    } catch (UnsupportedAudioFileException var4) {
+                        var4.printStackTrace();
+                    } catch (IOException var5) {
+                        var5.printStackTrace();
+                    } catch (LineUnavailableException var6) {
+                        var6.printStackTrace();
+                    }
+
                 });
-                panel.add(map[i][j]);
+                panel.add(this.map[i][j]);
             }
         }
+
         return panel;
     }
 
-    public GameXO(String title) throws HeadlessException {
-        super(title);
+    private void aiTurn() {
+        boolean aiwin = true;
+        boolean userwin = true;
+        int i;
+        int j;
+        if (this.playerTurn > 1) {
+            for(i = 0; i < 3; ++i) {
+                for(j = 0; j < 3; ++j) {
+                    if (this.map[i][j].isEnabled()) {
+                        this.map[i][j].setEnabled(false);
+                        this.map[i][j].setDisabledIcon(this.DOT_O_IMG);
+                        if (this.checkWin(this.DOT_O_IMG, this.map)) {
+                            return;
+                        }
+
+                        this.map[i][j].setEnabled(true);
+                        this.map[i][j].setDisabledIcon((Icon)null);
+                    }
+                }
+            }
+
+            aiwin = false;
+        }
+
+        if (!aiwin) {
+            for(i = 0; i < 3; ++i) {
+                for(j = 0; j < 3; ++j) {
+                    if (this.map[i][j].isEnabled()) {
+                        this.map[i][j].setEnabled(false);
+                        this.map[i][j].setDisabledIcon(this.DOT_X_IMG);
+                        if (this.checkWin(this.DOT_X_IMG, this.map)) {
+                            this.map[i][j].setDisabledIcon(this.DOT_O_IMG);
+                            return;
+                        }
+
+                        this.map[i][j].setEnabled(true);
+                        this.map[i][j].setDisabledIcon((Icon)null);
+                    }
+                }
+            }
+
+            userwin = false;
+        }
+
+        if (!aiwin && !userwin || this.playerTurn < 2) {
+            do {
+                Random rand = new Random();
+                i = rand.nextInt(3);
+                j = rand.nextInt(3);
+            } while(!this.map[i][j].isEnabled());
+
+            this.map[i][j].setDisabledIcon(this.DOT_O_IMG);
+            this.map[i][j].setEnabled(false);
+        }
+
+    }
+
+    private boolean checkWin(ImageIcon icon, JButton[][] map) {
+        int countD;
+        int countRD;
+        int countW;
+        for(countD = 0; countD < 3; ++countD) {
+            countRD = 0;
+            countW = 0;
+
+            for(int j = 0; j < 3; ++j) {
+                if (map[countD][j].getDisabledIcon() == icon) {
+                    ++countRD;
+                }
+
+                if (map[j][countD].getDisabledIcon() == icon) {
+                    ++countW;
+                }
+
+                if (countRD == 3 || countW == 3) {
+                    return true;
+                }
+            }
+        }
+
+        countD = 0;
+        countRD = 0;
+
+        for(countW = 0; countW < 3; ++countW) {
+            if (map[countW][countW].getDisabledIcon() == icon) {
+                ++countD;
+            }
+
+            if (map[countW][3 - countW - 1].getDisabledIcon() == icon) {
+                ++countRD;
+            }
+
+            if (countD == 3 || countRD == 3) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isMapFull() {
+        for(int i = 0; i < 3; ++i) {
+            for(int j = 0; j < 3; ++j) {
+                if (this.map[i][j].isEnabled()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void checkGame() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        ++this.playerTurn;
+        if (this.checkWin(this.DOT_X_IMG, this.map)) {
+            this.playSoundOnClick(this.soundWin);
+            JOptionPane.showMessageDialog(this, "Победил кожаный мешок!", "GameOver! You win!", -1);
+            this.newGame();
+        } else if (this.isMapFull()) {
+            JOptionPane.showMessageDialog(this, "Ничья", "GameOver! Field is full!", -1);
+            this.newGame();
+        } else {
+            this.aiTurn();
+            if (this.checkWin(this.DOT_O_IMG, this.map)) {
+                this.playSoundOnClick(this.soundLose);
+                JOptionPane.showMessageDialog(this, "Победил совершенный механизм!", "GameOver! You lose!", -1);
+                this.newGame();
+            } else if (this.isMapFull()) {
+                JOptionPane.showMessageDialog(this, "Ничья", "GameOver! Field is full!", -1);
+                this.newGame();
+            }
+        }
+
+    }
+
+    private GameXO() throws HeadlessException {
+        this.setTitle("Tic Tac Toe Game");
+        this.setIconImage(this.ICON.getImage());
         JMenuBar bar = new JMenuBar();
-        bar.add(createFileMenu());
-        setJMenuBar(bar);
-        add(getMap());
-        setSize(300,300);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
-        setVisible(true);
+        bar.add(this.createFileMenu());
+        this.setJMenuBar(bar);
+        this.add(this.gameField());
+        this.setSize(600, 600);
+        this.setLocationRelativeTo((Component)null);
+        this.setDefaultCloseOperation(3);
+        this.setResizable(false);
+        this.setVisible(true);
     }
 
     public static void main(String[] args) {
-        new GameXO("Крестики нолики");
+        new GameXO();
     }
 }
