@@ -1,14 +1,0 @@
-
-Q	java:S110
-"<This class has 6 parents which is greater than 5 authorized.(Ï³ÙØ
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Çª¦Õûÿÿÿÿ
-{
-java:S1130"eRemove the declaration of thrown exception 'java.awt.HeadlessException' which is a runtime exception.(»àñş
-S	java:S106"9Replace this use of System.out or System.err by a logger.(‰ú£ûûÿÿÿÿ
-S	java:S106"9Replace this use of System.out or System.err by a logger.(Ò‘õ©ùÿÿÿÿ
-B
-java:S1602",Remove useless curly braces around statement(ÈÒ
-S	java:S106""9Replace this use of System.out or System.err by a logger.(äá½ùıÿÿÿÿ
-S	java:S106("9Replace this use of System.out or System.err by a logger.(áÂàÿÿÿÿÿ
->
-java:S1481"(Remove this unused "bar" local variable.(À³ë
