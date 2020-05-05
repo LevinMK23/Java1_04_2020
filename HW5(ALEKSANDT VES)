@@ -1,0 +1,48 @@
+package geekbrains.lession0;
+
+class Person {
+    private String name, position, phoneNumber, email;
+    private int salary, age;
+
+    public void stringInfo() {
+        System.out.println(toString());
+    }
+
+
+    public Person(String name, String position, String email, String phoneNumber, int salary, int age) {
+        this.name = name;
+        this.position = position;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.salary = salary;
+        this.age = age;
+    }
+
+
+    public static void main(String[] args) {
+        Person[] persArray = new Person[5]; // Вначале объявляем массив объектов
+        persArray[0] = new Person("Ivanov Ivan", "Engineer", "ivivan@mailbox.com", "892312312", 30000, 30);
+        persArray[1] = new Person("Sidorov Petr", "Engineer", "ivivan23@mailbox.com", "892312332", 50000, 40);
+        persArray[2] = new Person("Gagarin Pavel", "Engineer", "ivivan42@mailbox.com", "892312353", 30000, 48);
+        persArray[3] = new Person("Kuznetsova Elena", "Engineer", "ivivan53@mailbox.com", "892312323", 40000, 25);
+        persArray[4] = new Person("Petrov Nikolay", "Engineer", "ivivan44@mailbox.com", "892312312", 30000, 43);
+        for (int i = 0; i < persArray.length; i++) {
+            if (persArray[i].age > 40) {
+                persArray[i].stringInfo();
+            }
+
+        }
+
+
+    }
+
+    public String toString() {
+        return "Employee{" +
+                "name='" + name + '\'' +
+                ", position=" + position +
+                ", email=" + email +
+                ", phoneNumber=" + phoneNumber +
+                ", salary=" + salary +
+                ", age=" + age + '}';
+    }
+}

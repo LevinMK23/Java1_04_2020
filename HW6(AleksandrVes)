@@ -1,0 +1,121 @@
+package geekbrains.lession0;
+
+public class Animal {
+
+    private String type, name;
+
+    public Animal(String type, String name) {
+        this.type = type;
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public void run(int distance) {
+        System.out.println(getType() + " " + getName() + " пробежала " + distance + " метров");
+    }
+
+    public void swim(int distance) {
+        System.out.println(getType() + " " + getName() + " проплыла " + distance + " метров");
+    }
+
+    public void jump(int distance) {
+        System.out.println(getType() + " " + getName() + " прыгнула " + distance + " метров");
+    }
+}
+
+
+package geekbrains.lession0;
+
+public class Cat extends Animal {
+
+    public Cat(String type, String name) {
+        super(type, name);
+    }
+
+    @Override
+    public void run(int distance) {
+        int runLimit = 100+(int) (Math.random()*101);
+        if (runLimit <= distance) System.out.println(getType() + " " + getName() + " Далеко...");
+        else super.run(distance);
+    }
+
+    @Override
+    public void jump(int distance) {
+        int jumpLimit = 2+(int) (Math.random()*3);
+        if (jumpLimit <= distance) System.out.println(getType() + " " + getName() + " Высоко...");
+        else super.jump(distance);
+    }
+
+
+    public void swim(int distance) {
+        System.out.println("i cant swim");
+    }
+}
+
+package geekbrains.lession0;
+
+public class Dog extends Animal {
+
+    public Dog(String type, String name) { super(type, name); }
+
+    @Override
+    public void run(int distance) {
+        int runLimit = 500+(int) (Math.random()*501);
+        if (runLimit <= distance) System.out.println(getType() + " " + getName() + " Далеко...");
+        else super.run(distance);
+    }
+
+    @Override
+    public void swim(int distance) {
+        int swimLimit = 1+(int) (Math.random()*2);
+        if (swimLimit <= distance) System.out.println(getType() + " " + getName() + " Глубоко...");
+        else super.swim(distance);
+    }
+    @Override
+    public void jump (int distance) {
+        int runLimit = 2+(int) (Math.random()*3);
+        if (runLimit <= distance) System.out.println(getType() + " " + getName() + " Высоко...");
+        else super.jump(distance);
+    }
+}
+
+package geekbrains.lession0;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Dog dog1 = new Dog("Dod", "Dog1");
+        Dog dog2 = new Dog("Dod", "Dog2");
+        Dog dog3 = new Dog("Dod", "Dog3");
+        Cat cat1 = new Cat("Cat", "Cat1");
+        Cat cat2 = new Cat("Cat", "Cat2");
+        Cat cat3 = new Cat("Cat", "Cat3");
+        dog1.run(750);
+        dog2.run(200);
+        dog3.run(960);
+        dog1.swim(3);
+        dog2.swim(2);
+        dog3.swim(1);
+        dog1.jump(2);
+        dog2.jump(1);
+        dog3.jump(3);
+        cat1.run(80);
+        cat2.run(124);
+        cat3.run(180);
+        cat1.swim(12);
+        cat2.swim(1);
+        cat3.swim(0);
+        cat1.jump(1);
+        cat2.jump(3);
+        cat3.jump(2);
+    }
+}
