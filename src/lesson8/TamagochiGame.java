@@ -1,7 +1,5 @@
 package lesson8;
 
-import java.io.IOException;
-
 public class TamagochiGame {
 
     /*
@@ -13,7 +11,7 @@ public class TamagochiGame {
     public static Animal dog = new Animal("GAV",80,10,80, 10);;
     public static MainFrame frame = new MainFrame();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         frame.mainFrame();
 
     }

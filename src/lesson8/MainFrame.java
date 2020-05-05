@@ -93,8 +93,6 @@ public class MainFrame extends JFrame {
     private JPanel playground() {
 
         playground.setBackground(Color.BLACK);
-        ImageIcon backgroundPic = new ImageIcon("src\\lesson8\\pics\\nIGpbWT.gif");
-        //picLabel.setIcon(backgroundPic);
         picLabel.setIcon(idle);
         playground.add(picLabel);
         add(playground);
